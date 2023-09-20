@@ -207,8 +207,8 @@ class CarInterface(CarInterfaceBase):
     ret.enableBsm = 0x3F6 in fingerprint[0] and candidate in TSS2_CAR
 
     # Detect smartDSU, which intercepts ACC_CMD from the DSU (or radar) allowing openpilot to send it
-    if 0x2FF in fingerprint[0]:
-      ret.flags |= ToyotaFlags.SMART_DSU.value
+    #if 0x2FF in fingerprint[0]:
+    ret.flags |= ToyotaFlags.SMART_DSU.value
 
     # No radar dbc for cars without DSU which are not TSS 2.0
     # TODO: make an adas dbc file for dsu-less models
@@ -222,8 +222,8 @@ class CarInterface(CarInterfaceBase):
 
     # if the smartDSU is detected, openpilot can send ACC_CONTROL and the smartDSU will block it from the DSU or radar.
     # since we don't yet parse radar on TSS2 radar-based ACC cars, gate longitudinal behind experimental toggle
-    use_sdsu = bool(ret.flags & ToyotaFlags.SMART_DSU)
-    if candidate in RADAR_ACC_CAR:
+    use_sdsu = True
+    if True:
       ret.experimentalLongitudinalAvailable = use_sdsu
       use_sdsu = use_sdsu and experimental_long
 
